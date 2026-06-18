@@ -19,7 +19,7 @@ DinamoFC/
 
 **Stack:** Next.js 15, TypeScript, Tailwind CSS, Zustand
 
-**URL:** ...
+**URL:** https://dinamo-fc.vercel.app
 
 ### Setup
 
