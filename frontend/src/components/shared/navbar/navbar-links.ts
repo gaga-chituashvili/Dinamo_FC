@@ -8,5 +8,5 @@ export const NAV_ITEMS = [
   // { label: "TICKETS", href: NAV_ROUTES.tickets },
   // { label: "SHOP", href: NAV_ROUTES.shop },
   { label: "CONTACT", href: NAV_ROUTES.contact },
-  { label: "HISTORY", href: NAV_ROUTES.history },
+  // { label: "HISTORY", href: NAV_ROUTES.history },
 ] as const;
