@@ -38,7 +38,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['', 'http://localhost:3000'],
+    origin: ['https://dinamo-fc.vercel.app', 'http://localhost:3000'],
     credentials: true,
   });
 
