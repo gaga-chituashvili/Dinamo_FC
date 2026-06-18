@@ -38,12 +38,12 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['https://dinamo-tb.vercel.app', 'http://localhost:3000'],
+    origin: ['', 'http://localhost:3000'],
     credentials: true,
   });
 
   const port = process.env.PORT ?? 4000;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   logger.log(`🚀 Server running on http://localhost:${port}`);
 }
 
