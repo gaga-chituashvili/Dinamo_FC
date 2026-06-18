@@ -14,25 +14,31 @@ export class HistoryService {
   private readonly logger = new Logger(HistoryService.name);
 
   async getHistory() {
-    this.logger.log('Scraping history from fcdinamo.ge');
+    this.logger.log('Fetching history from fcdinamo.ge');
     const { data: html } = await axios.get('https://fcdinamo.ge/club/history', {
       headers: HEADERS,
     });
     const $ = cheerio.load(html);
 
-    const paragraphs: string[] = [];
-    const images: string[] = [];
+    // Next.js ჩაშენებს data-ს ამ script tag-ში
+    const nextDataRaw = $('#__NEXT_DATA__').html();
+    if (nextDataRaw) {
+      this.logger.log('Found __NEXT_DATA__, parsing...');
+      const nextData = JSON.parse(nextDataRaw);
+      this.logger.log(
+        '__NEXT_DATA__ keys: ' +
+          JSON.stringify(Object.keys(nextData?.props?.pageProps || {})),
+      );
+      // დავბეჭდოთ სრული სტრუქტურა რომ ვნახოთ
+      this.logger.log(
+        'Full pageProps: ' +
+          JSON.stringify(nextData?.props?.pageProps).slice(0, 2000),
+      );
+    } else {
+      this.logger.warn('No __NEXT_DATA__ found');
+      this.logger.log('HTML snippet: ' + html.slice(0, 1000));
+    }
 
-    $('.markup p').each((_, el) => {
-      const text = $(el).text().trim();
-      if (text) paragraphs.push(text);
-    });
-
-    $('.markup img').each((_, el) => {
-      const src = $(el).attr('src');
-      if (src) images.push(`https://fcdinamo.ge${src}`);
-    });
-
-    return { paragraphs, images };
+    return { debug: true };
   }
 }
