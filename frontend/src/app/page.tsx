@@ -1,6 +1,7 @@
 import { Hero } from "@/src/features/home/components/Hero";
 import { NextMatch } from "@/src/features/home/components/NextMatch";
 import { LeagueOverview } from "@/src/features/home/components/LeagueOverview";
+import { NewsSection } from "@/src/features/home/components/NewsSection";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <NextMatch />
       <LeagueOverview />
+      <NewsSection />
     </div>
   );
 }
