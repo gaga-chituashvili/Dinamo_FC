@@ -3,11 +3,11 @@
 import { useState, useEffect, useMemo } from "react";
 import { MoveRight, MoveLeft, SearchX } from "lucide-react";
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { NewsHero } from "./NewsHero";
-import { NewsGrid } from "./NewsGrid";
-import { NewsSearch } from "./NewsSearch";
-import { fetchNews } from "../services/news.service";
-import { NewsItem } from "../types/news.types";
+import { NewsHero } from "../NewsHero";
+import { NewsGrid } from "../NewsGrid";
+import { NewsSearch } from "../NewsSearch";
+import { fetchNews } from "../../services/news.service";
+import { NewsItem } from "../../types/news.types";
 
 const ITEMS_PER_PAGE = 6;
 

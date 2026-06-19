@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { HistoryHero } from "./HistoryHero";
-import { HistoryCard } from "./HistoryCard";
-import { fetchHistory } from "../services/history.service";
-import { HistoryEra } from "../types/history.types";
+import { HistoryHero } from "../HistoryHero";
+import { HistoryCard } from "../HistoryCard";
+import { fetchHistory } from "../../services/history.service";
+import { HistoryEra } from "../../types/history.types";
 
 export function HistoryView() {
   const [eras, setEras] = useState<HistoryEra[]>([]);

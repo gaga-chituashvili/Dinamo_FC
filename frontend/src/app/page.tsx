@@ -1,7 +1,7 @@
-import { Hero } from "@/src/features/home/components/Hero";
-import { NextMatch } from "@/src/features/home/components/NextMatch";
-import { LeagueOverview } from "@/src/features/home/components/LeagueOverview";
-import { NewsSection } from "@/src/features/home/components/NewsSection";
+import { Hero } from "@/src/features/home/components/view/Hero";
+import { NextMatch } from "@/src/features/home/components/view/NextMatch";
+import { LeagueOverview } from "@/src/features/home/components/view/LeagueOverview";
+import { NewsSection } from "@/src/features/home/components/view/NewsSection";
 
 export default function Home() {
   return (

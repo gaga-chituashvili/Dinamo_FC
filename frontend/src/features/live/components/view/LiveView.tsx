@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { Radio } from "lucide-react";
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { fetchLive } from "../services/live.service";
-import { LiveVideo } from "../types/live.types";
+import { fetchLive } from "../../services/live.service";
+import { LiveVideo } from "../../types/live.types";
 
 const POLL_INTERVAL_MS = 30_000;
 

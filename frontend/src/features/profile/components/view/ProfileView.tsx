@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { profileService } from "../services/profile.service";
-import type { FanProfile } from "../types/types";
-import { ProfileHeader } from "./ProfileHeader";
-import { LoyaltySection } from "./LoyaltySection";
-import { StatsSection } from "./StatsSection";
-import { PersonalInfoCard } from "./PersonalInfoCard";
-import { TicketsSection } from "./TicketsSection";
-import { PaymentMethodsCard } from "./PaymentMethodsCard";
+import { profileService } from "../../services/profile.service";
+import type { FanProfile } from "../../types/types";
+import { ProfileHeader } from "../ProfileHeader";
+import { LoyaltySection } from "../LoyaltySection";
+import { StatsSection } from "../StatsSection";
+import { PersonalInfoCard } from "../PersonalInfoCard";
+import { TicketsSection } from "../TicketsSection";
+import { PaymentMethodsCard } from "../PaymentMethodsCard";
 import { Wrapper } from "@/src/components/shared/wrapper";
 import { CircleAlert } from "lucide-react";
 

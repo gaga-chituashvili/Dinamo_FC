@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TitlesHero } from "./components/TitlesHero";
-import { TitleFeatured } from "./components/TitleFeatured";
-import { TitlesGrid } from "./components/TitlesGrid";
-import { TitlesStats } from "./components/TitlesStats";
-import { fetchTitles } from "./services/titles.service";
-import { TitleCard } from "./types/titles.types";
-import { pickFeaturedTitle } from "./utils/titles.utils";
+import { TitlesHero } from "../../components/TitlesHero";
+import { TitleFeatured } from "../../components/TitleFeatured";
+import { TitlesGrid } from "../../components/TitlesGrid";
+import { TitlesStats } from "../../components/TitlesStats";
+import { fetchTitles } from "../../services/titles.service";
+import { TitleCard } from "../../types/titles.types";
+import { pickFeaturedTitle } from "../../utils/titles.utils";
 
 export function TitlesView() {
   const [titles, setTitles] = useState<TitleCard[]>([]);

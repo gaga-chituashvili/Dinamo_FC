@@ -10,8 +10,8 @@ import {
   getNextFixture,
   getTeamInitials,
   isDinamo,
-} from "./next-match/next-match.utils";
-import { useCountdown } from "./next-match/useCountdown";
+} from "../next-match/next-match.utils";
+import { useCountdown } from "../next-match/useCountdown";
 
 export function NextMatch() {
   const [nextMatch, setNextMatch] = useState<Fixture | null>(null);

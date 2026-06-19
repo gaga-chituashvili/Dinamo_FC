@@ -5,8 +5,8 @@ import { Wrapper } from "@/src/components/shared/wrapper";
 import { squadService } from "@/src/features/squad/services/squad.service";
 import type { Player } from "@/src/features/squad/types";
 import { POSITION_ORDER, POSITION_LABELS } from "@/src/features/squad/types";
-import { SquadHeader } from "./SquadHeader";
-import { PositionGroup } from "./PositionGroup";
+import { SquadHeader } from "../SquadHeader";
+import { PositionGroup } from "../PositionGroup";
 
 export default function SquadView() {
   const [players, setPlayers] = useState<Player[]>([]);
