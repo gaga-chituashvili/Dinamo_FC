@@ -9,4 +9,5 @@ export const NAV_ROUTES = {
   terms: "/terms",
   contact: "/contact",
   history: "/history",
+  titles: "/titles",
 } as const;
