@@ -227,6 +227,7 @@ fly deploy
 | Top scorers       | erovnuliliga.ge/ge/stats                 | axios + cheerio |
 | News              | erovnuliliga.ge/ge/news                  | axios + cheerio |
 | Club history      | dinamo.ge/ka/page/history                | axios + cheerio |
+| Titles            | dinamo.ge/club/titles                    | axios + cheerio |
 
 ---
 
