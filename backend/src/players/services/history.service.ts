@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import puppeteer from 'puppeteer';
+import { chromium } from 'playwright';
 
 export interface HistoryEra {
   title: string;
@@ -23,19 +23,21 @@ export class HistoryService {
 
     this.logger.log('Scraping club history from fcdinamo.ge');
 
-    const browser = await puppeteer.launch({
+    const browser = await chromium.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     try {
-      const page = await browser.newPage();
-      await page.setUserAgent(
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
-      );
+      const page = await browser.newPage({
+        userAgent:
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
+        viewport: { width: 1920, height: 1080 },
+        deviceScaleFactor: 2,
+      });
 
       await page.goto('https://fcdinamo.ge/club/history', {
-        waitUntil: 'networkidle0',
+        waitUntil: 'networkidle',
         timeout: 30000,
       });
 
@@ -48,16 +50,38 @@ export class HistoryService {
         buttons.forEach((btn) => btn.click());
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await page.waitForTimeout(1000);
 
       const eras = await page.evaluate(() => {
+        function getBestImageSrc(img: HTMLImageElement | null): string | null {
+          if (!img) return null;
+
+          const srcset = img.getAttribute('srcset');
+          if (srcset) {
+            const candidates = srcset
+              .split(',')
+              .map((entry) => entry.trim().split(' '))
+              .map(([url, width]) => ({
+                url,
+                width: parseInt(width?.replace('w', '') ?? '0', 10),
+              }))
+              .filter((c) => c.url);
+
+            if (candidates.length > 0) {
+              return candidates.sort((a, b) => b.width - a.width)[0].url;
+            }
+          }
+
+          return img.getAttribute('src');
+        }
+
         const blocks = Array.from(
           document.querySelectorAll('div.mb-16.relative'),
         );
 
         return blocks.map((block) => {
           const title = block.querySelector('h2')?.textContent?.trim() ?? '';
-          const image = block.querySelector('img')?.getAttribute('src') ?? null;
+          const image = getBestImageSrc(block.querySelector('img'));
           const text =
             block
               .querySelector('p.text-white.text-opacity-90')
