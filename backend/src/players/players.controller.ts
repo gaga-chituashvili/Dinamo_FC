@@ -8,12 +8,15 @@ import {
   Res,
 } from '@nestjs/common';
 import { PlayersService } from './players.service';
+import { TitlesService } from './services/titles.service';
 import axios from 'axios';
-import { Response } from 'express';
 
 @Controller('players')
 export class PlayersController {
-  constructor(private readonly playersService: PlayersService) {}
+  constructor(
+    private readonly playersService: PlayersService,
+    private readonly titlesService: TitlesService,
+  ) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -75,6 +78,12 @@ export class PlayersController {
       res.status(404).end();
     }
   }
+  @Get('titles')
+  @HttpCode(HttpStatus.OK)
+  getTitles() {
+    return this.titlesService.getTitles();
+  }
+
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   getPlayer(@Param('id') id: string) {

@@ -3,11 +3,11 @@
 import { useState, useEffect, useMemo } from "react";
 import { MoveRight, MoveLeft, SearchX } from "lucide-react";
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { NewsHero } from "./NewsHero";
-import { NewsGrid } from "./NewsGrid";
-import { NewsSearch } from "./NewsSearch";
-import { fetchNews } from "../services/news.service";
-import { NewsItem } from "../types/news.types";
+import { NewsHero } from "../NewsHero";
+import { NewsGrid } from "../NewsGrid";
+import { NewsSearch } from "../NewsSearch";
+import { fetchNews } from "../../services/news.service";
+import { NewsItem } from "../../types/news.types";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -36,15 +36,7 @@ export function NewsView() {
     );
   }, [articles, search]);
 
-  const hero =
-    filtered.find(
-      (a) =>
-        a.title.includes("მოიგო") ||
-        a.title.includes("გაიმარჯვა") ||
-        a.title.includes("დინამომ"),
-    ) ??
-    filtered[0] ??
-    null;
+  const hero = filtered[0] ?? null;
 
   const heroIndex = hero ? filtered.indexOf(hero) : -1;
   const rest = filtered.filter((_, i) => i !== heroIndex);

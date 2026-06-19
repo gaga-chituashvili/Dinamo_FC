@@ -25,7 +25,7 @@ export function HeroImage({ images }: HeroImageProps) {
 
   return (
     <div
-      className="relative h-150 w-full overflow-hidden sm:h-105 lg:h-160"
+      className="relative h-100 w-full overflow-hidden sm:h-105 lg:h-160"
       style={{ clipPath: "polygon(8% 0, 100% 0, 100% 100%, 0% 100%)" }}
     >
       <AnimatePresence mode="wait">

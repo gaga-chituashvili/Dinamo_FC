@@ -1,8 +1,8 @@
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { LeagueOverviewBackground } from "./league-overview/LeagueOverviewBackground";
-import { SectionHeading } from "./league-overview/SectionHeading";
-import { StandingsTable } from "./league-overview/standings/StandingsTable";
-import { SeasonLeaders } from "./league-overview/leaders/SeasonLeaders";
+import { LeagueOverviewBackground } from "../league-overview/LeagueOverviewBackground";
+import { SectionHeading } from "../league-overview/SectionHeading";
+import { StandingsTable } from "../league-overview/standings/StandingsTable";
+import { SeasonLeaders } from "../league-overview/leaders/SeasonLeaders";
 
 export function getCurrentSeason(): string {
   const now = new Date();

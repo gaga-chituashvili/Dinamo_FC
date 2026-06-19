@@ -4,10 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { FeaturedCard } from "./news/FeaturedCard";
-import { SideCard } from "./news/SideCard";
-import { NewsBackground } from "./news/NewsBackground";
-import { NEWS_TAGS } from "./news/news.constants";
+import { FeaturedCard } from "../news/FeaturedCard";
+import { SideCard } from "../news/SideCard";
+import { NewsBackground } from "../news/NewsBackground";
+import { NEWS_TAGS } from "../news/news.constants";
 import type { NewsArticle } from "@/src/features/home/types/topPlayer.type";
 
 export function NewsSection() {

@@ -1,6 +1,6 @@
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { StandingsTable } from "./StandingsTable";
-import { TopScorersSection } from "./TopScorersSection";
+import { StandingsTable } from "../StandingsTable";
+import { TopScorersSection } from "../TopScorersSection";
 
 export function StandingsView() {
   return (

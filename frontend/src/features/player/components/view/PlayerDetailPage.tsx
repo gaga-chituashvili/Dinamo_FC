@@ -3,13 +3,13 @@
 import { useParams, useRouter } from "next/navigation";
 import { ChevronLeft, CircleAlert } from "lucide-react";
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { usePlayer } from "../hooks/usePlayer";
-import { PlayerHero } from "./PlayerHero";
-import { PlayerSidebar } from "./PlayerSidebar";
-import { SeasonStats } from "./SeasonStats";
-import { CareerTable } from "./CareerTable";
-import { LastMatches } from "./LastMatches";
-import { Transfers } from "./Transfers";
+import { usePlayer } from "../../hooks/usePlayer";
+import { PlayerHero } from "../PlayerHero";
+import { PlayerSidebar } from "../PlayerSidebar";
+import { SeasonStats } from "../SeasonStats";
+import { CareerTable } from "../CareerTable";
+import { LastMatches } from "../LastMatches";
+import { Transfers } from "../Transfers";
 
 export function PlayerDetailPage() {
   const params = useParams();

@@ -8,6 +8,7 @@ import { StandingsService } from './services/standings.service';
 import { ScorersService } from './services/scorers.service';
 import { NewsService } from './services/news.service';
 import { HistoryService } from './services/history.service';
+import { TitlesService } from './services/titles.service';
 import { LiveService } from './services/live.service';
 import { User } from '../auth/entities/user.entity';
 
@@ -22,6 +23,7 @@ import { User } from '../auth/entities/user.entity';
     ScorersService,
     NewsService,
     HistoryService,
+    TitlesService,
     LiveService,
   ],
   exports: [PlayersService],

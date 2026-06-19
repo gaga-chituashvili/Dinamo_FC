@@ -1,7 +1,7 @@
 import { Wrapper } from "@/src/components/shared/wrapper";
-import { ContactForm } from "./ContactForm";
-import { HQCard } from "./HQCard";
-import { StadiumMap } from "./StadiumMap";
+import { ContactForm } from "../ContactForm";
+import { HQCard } from "../HQCard";
+import { StadiumMap } from "../StadiumMap";
 
 export function ContactView() {
   return (

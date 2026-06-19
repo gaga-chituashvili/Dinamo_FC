@@ -1,4 +1,4 @@
-import { StandingsView } from "@/src/features/table/components/StandingsView";
+import { StandingsView } from "@/src/features/table/components/view/StandingsView";
 
 export default function TablePage() {
   return <StandingsView />;
