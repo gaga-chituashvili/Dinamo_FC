@@ -203,6 +203,7 @@ pnpm run start:dev
 | GET    | `/api/players/scorers`   | Top scorers, assists, appearances |
 | GET    | `/api/players/news`      | Latest news                       |
 | GET    | `/api/players/history`   | Club history                      |
+| GET    | `/api/players/titles`    | Club titles                       |   
 | GET    | `/api/players/:id`       | Single player detail              |
 | POST   | `/api/contact`           | Contact form submission           |
 
