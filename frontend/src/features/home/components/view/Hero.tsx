@@ -4,7 +4,7 @@ import { Wrapper } from "@/src/components/shared/wrapper";
 import { HeroBackground } from "../hero/HeroBackground";
 import { HeroContent } from "../hero/HeroContent";
 import { HeroImage } from "../hero/HeroImage";
-import { useHeroImages } from "../../hook/useHeroImages";
+import { useHeroImages } from "../../hooks/useHeroImages";
 
 export function Hero() {
   const heroImages = useHeroImages();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Player } from "@/src/features/squad/types";
+import { Player } from "@/src/features/squad/types/squad.types";
 
 export function useHeroImages() {
   const [heroImages, setHeroImages] = useState<string[]>([]);

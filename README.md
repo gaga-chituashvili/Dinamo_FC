@@ -12,7 +12,6 @@ DinamoFC/
 └── backend/ # NestJS + PostgreSQL (Neon) + Fly.io
 ```
 
-
 ---
 
 ## 🖥️ Frontend
@@ -41,46 +40,50 @@ NEXT_PUBLIC_API_URL=https://dinamofc.fly.dev
 src/
 ├── app/                          # Next.js App Router — pages and routes
 │   ├── admin/                    # Admin panel (protected route)
-│   │   ├── blogs/               # Blog management
-│   │   └── statistics/          # Statistics dashboard
+│   │   ├── blogs/                # Blog management
+│   │   └── statistics/           # Statistics dashboard
 │   ├── contact/                  # Contact page
 │   ├── history/                  # Club history page
+│   ├── live/                     # Live match page
 │   ├── login/                    # Login page
 │   ├── news/                     # News listing page
-│   ├── player/[id]/             # Player detail page (dynamic route)
+│   ├── player/[id]/              # Player detail page (dynamic route)
 │   ├── profile/                  # User profile page
 │   ├── register/                 # Registration page
 │   ├── table/                    # League standings page
-│   └── team/                     # Squad page
+│   ├── team/                     # Squad page
+│   └── titles/                   # Club titles/trophies page
 │
 ├── components/                   # Shared/reusable UI components
 │   ├── shared/
-│   │   ├── footer/              # Footer sub-components (brand, links, sponsors)
-│   │   ├── navbar/              # Navbar with notifications
-│   │   ├── Footer.tsx           # Footer root component
-│   │   ├── wrapper.tsx          # Layout wrapper with max-width
-│   │   ├── routes.tsx           # Shared route constants
-│   │   └── useScrollDirection   # Hook for hiding navbar on scroll
-│   └── ui/                      # Base UI primitives (button, form, input, label)
+│   │   ├── footer/                # Footer sub-components (brand, links, sponsors)
+│   │   ├── Footer.tsx             # Footer root component
+│   │   ├── navbar/                # Navbar with notifications
+│   │   ├── routes.tsx             # Shared route constants
+│   │   ├── useScrollDirection.tsx # Hook for hiding navbar on scroll
+│   │   └── wrapper.tsx            # Layout wrapper with max-width
+│   └── ui/                        # Base UI primitives (shadcn)
 │
-├── features/                     # Feature-based modules
-│   ├── admin/                    # Admin panel logic, guards, sidebar
-│   ├── auth/                     # Login, register, forgot password (forms + schemas)
-│   ├── contact/                  # Contact form, map, HQ card
-│   ├── history/                  # Club history view and service
-│   ├── home/                     # Homepage sections (hero, standings, news, next match)
-│   ├── news/                     # News page components and service
-│   ├── player/                   # Player detail page (career, stats, transfers)
-│   ├── profile/                  # Fan profile (loyalty, tickets, payments)
-│   ├── sponsors/                 # Sponsors fetching and display
-│   ├── squad/                    # Squad listing with position groups
-│   └── table/                    # Standings table and top scorers
+├── features/                      # Feature-based modules
+│   ├── admin/                     # Admin panel logic, guards, sidebar
+│   ├── auth/                      # Login, register, forgot password
+│   ├── contact/                   # Contact form, map, HQ card
+│   ├── history/                   # Club history view and service (Playwright scraper)
+│   ├── home/                      # Homepage sections (hero, standings, news, next match)
+│   ├── live/                      # Live match data
+│   ├── news/                      # News page components and service (cheerio scraper)
+│   ├── player/                    # Player detail page (career, stats, transfers)
+│   ├── profile/                   # Fan profile (loyalty, tickets, payments)
+│   ├── sponsors/                  # Sponsors fetching and display (no own UI — feeds Footer)
+│   ├── squad/                     # Squad listing with position groups
+│   ├── table/                     # Standings table and top scorers
+│   └── titles/                    # Club titles/trophies (Playwright scraper)
 │
-└── lib/                          # Utility functions and shared logic
-    ├── api.ts                    # Base API client
-    ├── identity-auth.ts          # Identity/session authentication helpers
-    ├── jwt-payload.ts            # JWT token decoder
-    └── utils.ts                  # General utility functions (cn, etc.)
+└── lib/                           # Utility functions and shared logic
+    ├── api.ts                     # Base API client
+    ├── identity-auth.ts           # Identity/session authentication helpers
+    ├── jwt-payload.ts             # JWT token decoder
+    └── utils.ts                   # General utility functions (cn, etc.)
 ```
 
 ---
