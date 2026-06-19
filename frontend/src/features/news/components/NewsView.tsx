@@ -36,15 +36,7 @@ export function NewsView() {
     );
   }, [articles, search]);
 
-  const hero =
-    filtered.find(
-      (a) =>
-        a.title.includes("მოიგო") ||
-        a.title.includes("გაიმარჯვა") ||
-        a.title.includes("დინამომ"),
-    ) ??
-    filtered[0] ??
-    null;
+  const hero = filtered[0] ?? null;
 
   const heroIndex = hero ? filtered.indexOf(hero) : -1;
   const rest = filtered.filter((_, i) => i !== heroIndex);
