@@ -1,4 +1,5 @@
-export interface HistoryData {
-  paragraphs: string[];
-  images: string[];
+export interface HistoryEra {
+  title: string;
+  image: string | null;
+  text: string;
 }

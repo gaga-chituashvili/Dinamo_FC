@@ -1,9 +1,15 @@
-import { HistoryData } from "../types/history.types";
+import { HistoryEra } from "../types/history.types";
 
-export async function fetchHistory(): Promise<HistoryData> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/players/history`,
-  );
-  if (!res.ok) throw new Error(`Failed to fetch history: ${res.status}`);
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
+
+export async function fetchHistory(): Promise<HistoryEra[]> {
+  const res = await fetch(`${API_URL}/api/players/history`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch history");
+  }
+
   return res.json();
 }
