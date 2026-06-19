@@ -19,7 +19,7 @@ DinamoFC/
 
 **Stack:** Next.js 15, TypeScript, Tailwind CSS, Zustand
 
-**URL:** ...
+**URL:** https://dinamo-fc.vercel.app
 
 ### Setup
 
@@ -148,4 +148,4 @@ fly deploy
 
 ## 👤 Authentication
 
-JWT-based auth with access and refresh tokens. State managed via Zustand `useAuthStore`. Tokens stored in cookies with silent refresh on 401.****
+JWT-based auth with access and refresh tokens. State managed via Zustand `useAuthStore`. Tokens stored in cookies with silent refresh on 401.
