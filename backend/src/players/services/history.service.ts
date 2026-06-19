@@ -1,5 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { chromium } from 'playwright';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 
 export interface HistoryEra {
   title: string;
@@ -10,19 +12,66 @@ export interface HistoryEra {
 @Injectable()
 export class HistoryService {
   private readonly logger = new Logger(HistoryService.name);
-  private historyCache: { data: HistoryEra[]; cachedAt: number } | null = null;
   private readonly HISTORY_CACHE_TTL = 24 * 60 * 60 * 1000;
+  private readonly CACHE_FILE = path.join(
+    process.cwd(),
+    'cache',
+    'history.json',
+  );
+  private memCache: { data: HistoryEra[]; cachedAt: number } | null = null;
 
   async getHistory(): Promise<HistoryEra[]> {
+    // 1. in-memory (სწრაფი, ამავე პროცესში)
     if (
-      this.historyCache &&
-      Date.now() - this.historyCache.cachedAt < this.HISTORY_CACHE_TTL
+      this.memCache &&
+      Date.now() - this.memCache.cachedAt < this.HISTORY_CACHE_TTL
     ) {
-      return this.historyCache.data;
+      return this.memCache.data;
     }
 
-    this.logger.log('Scraping club history from fcdinamo.ge');
+    // 2. disk cache (restart-ის შემდეგაც გადარჩება)
+    const diskCache = await this.readDiskCache();
+    if (diskCache && Date.now() - diskCache.cachedAt < this.HISTORY_CACHE_TTL) {
+      this.memCache = diskCache;
+      return diskCache.data;
+    }
 
+    // 3. scraping
+    this.logger.log('Scraping club history from fcdinamo.ge');
+    const filtered = await this.scrape();
+
+    const entry = { data: filtered, cachedAt: Date.now() };
+    this.memCache = entry;
+    await this.writeDiskCache(entry);
+
+    return filtered;
+  }
+
+  private async readDiskCache(): Promise<{
+    data: HistoryEra[];
+    cachedAt: number;
+  } | null> {
+    try {
+      const raw = await fs.readFile(this.CACHE_FILE, 'utf-8');
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+
+  private async writeDiskCache(entry: {
+    data: HistoryEra[];
+    cachedAt: number;
+  }) {
+    try {
+      await fs.mkdir(path.dirname(this.CACHE_FILE), { recursive: true });
+      await fs.writeFile(this.CACHE_FILE, JSON.stringify(entry));
+    } catch (err) {
+      this.logger.warn(`Failed to write disk cache: ${err}`);
+    }
+  }
+
+  private async scrape(): Promise<HistoryEra[]> {
     const browser = await chromium.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -90,10 +139,7 @@ export class HistoryService {
         });
       });
 
-      const filtered = eras.filter((e) => e.title && e.text);
-
-      this.historyCache = { data: filtered, cachedAt: Date.now() };
-      return filtered;
+      return eras.filter((e) => e.title && e.text);
     } finally {
       await browser.close();
     }

@@ -1,5 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { chromium } from 'playwright';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 
 export interface TitleCard {
   title: string;
@@ -10,19 +12,60 @@ export interface TitleCard {
 @Injectable()
 export class TitlesService {
   private readonly logger = new Logger(TitlesService.name);
-  private titlesCache: { data: TitleCard[]; cachedAt: number } | null = null;
   private readonly TITLES_CACHE_TTL = 24 * 60 * 60 * 1000;
+  private readonly CACHE_FILE = path.join(
+    process.cwd(),
+    'cache',
+    'titles.json',
+  );
+  private memCache: { data: TitleCard[]; cachedAt: number } | null = null;
 
   async getTitles(): Promise<TitleCard[]> {
     if (
-      this.titlesCache &&
-      Date.now() - this.titlesCache.cachedAt < this.TITLES_CACHE_TTL
+      this.memCache &&
+      Date.now() - this.memCache.cachedAt < this.TITLES_CACHE_TTL
     ) {
-      return this.titlesCache.data;
+      return this.memCache.data;
+    }
+
+    const diskCache = await this.readDiskCache();
+    if (diskCache && Date.now() - diskCache.cachedAt < this.TITLES_CACHE_TTL) {
+      this.memCache = diskCache;
+      return diskCache.data;
     }
 
     this.logger.log('Scraping titles from fcdinamo.ge');
+    const filtered = await this.scrape();
 
+    const entry = { data: filtered, cachedAt: Date.now() };
+    this.memCache = entry;
+    await this.writeDiskCache(entry);
+
+    return filtered;
+  }
+
+  private async readDiskCache(): Promise<{
+    data: TitleCard[];
+    cachedAt: number;
+  } | null> {
+    try {
+      const raw = await fs.readFile(this.CACHE_FILE, 'utf-8');
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+
+  private async writeDiskCache(entry: { data: TitleCard[]; cachedAt: number }) {
+    try {
+      await fs.mkdir(path.dirname(this.CACHE_FILE), { recursive: true });
+      await fs.writeFile(this.CACHE_FILE, JSON.stringify(entry));
+    } catch (err) {
+      this.logger.warn(`Failed to write disk cache: ${err}`);
+    }
+  }
+
+  private async scrape(): Promise<TitleCard[]> {
     const browser = await chromium.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -60,10 +103,7 @@ export class TitlesService {
         });
       });
 
-      const filtered = titles.filter((t) => t.title);
-
-      this.titlesCache = { data: filtered, cachedAt: Date.now() };
-      return filtered;
+      return titles.filter((t) => t.title);
     } finally {
       await browser.close();
     }
