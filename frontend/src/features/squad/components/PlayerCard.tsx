@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Player } from "../types";
+import type { Player } from "../types/squad.types";
 
 interface PlayerCardProps {
   player: Player;

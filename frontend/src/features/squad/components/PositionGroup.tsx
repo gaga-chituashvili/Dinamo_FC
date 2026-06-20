@@ -1,4 +1,4 @@
-import type { Player } from "../types";
+import type { Player } from "../types/squad.types";
 import { PlayerCard } from "./PlayerCard";
 
 interface PositionGroupProps {
