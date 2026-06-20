@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   },
   description:
     "დინამო თბილისის არაოფიციალური ფან პლატფორმა — შემადგენლობა, მატჩები, სატურნირო ცხრილი, სიახლეები და კლუბის ისტორია.",
+
+  verification: {
+    google: "KfyeWG3keO98GFyMwG_vvy383fCnRg2soVmlOXTyjZo",
+  },
   keywords: [
     "Dinamo Tbilisi",
     "დინამო თბილისი",
