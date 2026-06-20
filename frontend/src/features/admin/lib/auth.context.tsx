@@ -7,11 +7,7 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import {
-  fetchSessionUserFromProfiles,
-  DINAMO_TENANT,
-  type DinamoSessionUser,
-} from "@/src/lib/identity-auth";
+import { api } from "@/src/lib/api";
 import type { AuthUser } from "@/src/features/admin/types/admin.types";
 
 interface AuthCtx {
@@ -28,29 +24,15 @@ const AuthContext = createContext<AuthCtx>({
   refreshUser: async () => {},
 });
 
-const SESSION_USER_KEY = "dinamo_session_user";
-
-function readCachedSessionUser(): AuthUser | null {
-  try {
-    const raw = localStorage.getItem(SESSION_USER_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as DinamoSessionUser;
-    return {
-      id: parsed.userId,
-      name: parsed.name,
-      role: parsed.role,
-    };
-  } catch {
-    return null;
-  }
+interface MeResponse {
+  id: string;
+  email: string;
+  name: string;
+  role: "fan" | "admin";
 }
 
-function toAuthUser(session: DinamoSessionUser): AuthUser {
-  return {
-    id: session.userId,
-    name: session.name,
-    role: session.role,
-  };
+function toAuthRole(role: MeResponse["role"]): AuthUser["role"] {
+  return role === "admin" ? "admin" : "user";
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -58,23 +40,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refreshUser = useCallback(async () => {
-    const token = localStorage.getItem("access_token");
-    if (!token) {
+    try {
+      const me = await api<MeResponse>("api/auth/me", { auth: true });
+      setUser({ id: me.id, name: me.name, role: toAuthRole(me.role) });
+    } catch {
       setUser(null);
-      localStorage.removeItem(SESSION_USER_KEY);
-      return;
     }
-
-    const session = await fetchSessionUserFromProfiles(token, DINAMO_TENANT);
-    if (session) {
-      const nextUser = toAuthUser(session);
-      setUser(nextUser);
-      localStorage.setItem(SESSION_USER_KEY, JSON.stringify(session));
-      return;
-    }
-
-    const cached = readCachedSessionUser();
-    setUser(cached);
   }, []);
 
   useEffect(() => {
@@ -91,7 +62,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem("access_token");
     window.dispatchEvent(new Event("auth-change"));
     localStorage.removeItem("refresh_token");
-    localStorage.removeItem(SESSION_USER_KEY);
     setUser(null);
     window.location.href = "/login";
   }, []);
