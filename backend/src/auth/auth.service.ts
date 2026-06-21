@@ -76,6 +76,7 @@ export class AuthService {
   }
 
   getMe(user: User): Omit<User, 'passwordHash'> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash: _pw, ...rest } = user;
     return rest;
   }

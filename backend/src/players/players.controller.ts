@@ -7,6 +7,8 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
+import type { Readable } from 'stream';
 import { PlayersService } from './players.service';
 import { TitlesService } from './services/titles.service';
 import axios from 'axios';
@@ -61,9 +63,9 @@ export class PlayersController {
   }
 
   @Get('proxy-image')
-  async proxyImage(@Query('url') url: string, @Res() res: any) {
+  async proxyImage(@Query('url') url: string, @Res() res: Response) {
     try {
-      const response = await axios.get(url, {
+      const response = await axios.get<Readable>(url, {
         responseType: 'stream',
         headers: {
           Referer: 'https://erovnuliliga.ge',

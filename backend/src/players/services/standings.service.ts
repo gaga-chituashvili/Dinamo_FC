@@ -9,24 +9,37 @@ const HEADERS = {
   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 };
 
+export interface StandingRow {
+  position: number;
+  team: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  points: number;
+  logo: string | null;
+}
+
 @Injectable()
 export class StandingsService {
   private readonly logger = new Logger(StandingsService.name);
-  private cache: { data: any; cachedAt: number } | null = null;
+  private cache: { data: StandingRow[]; cachedAt: number } | null = null;
   private readonly CACHE_TTL = 5 * 60 * 1000;
 
-  async getStandings() {
+  async getStandings(): Promise<StandingRow[]> {
     if (this.cache && Date.now() - this.cache.cachedAt < this.CACHE_TTL) {
       return this.cache.data;
     }
 
     this.logger.log('Scraping standings from erovnuliliga.ge');
-    const { data: html } = await axios.get(
+    const { data: html } = await axios.get<string>(
       'https://erovnuliliga.ge/ge/tables',
       { headers: HEADERS },
     );
     const $ = cheerio.load(html);
-    const standings: any[] = [];
+    const standings: StandingRow[] = [];
 
     $('table.ttl-table tbody tr').each((_, row) => {
       const position = parseInt(
