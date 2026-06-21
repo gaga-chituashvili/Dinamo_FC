@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { User } from "lucide-react";
+import { ROUTES } from "@/src/lib/routes";
 
 interface Props {
   isLoggedIn: boolean;
@@ -19,7 +20,7 @@ export function AuthAction({
 
   if (isLoggedIn) {
     return (
-      <Link href="/profile" className={baseClass}>
+      <Link href={ROUTES.profile} className={baseClass}>
         <User className="h-3.5 w-3.5" />
         PROFILE
       </Link>

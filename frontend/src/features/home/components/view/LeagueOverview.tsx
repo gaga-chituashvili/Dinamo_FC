@@ -1,8 +1,11 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Wrapper } from "@/src/components/shared/wrapper";
 import { LeagueOverviewBackground } from "../league-overview/LeagueOverviewBackground";
 import { SectionHeading } from "../league-overview/SectionHeading";
 import { StandingsTable } from "../league-overview/standings/StandingsTable";
 import { SeasonLeaders } from "../league-overview/leaders/SeasonLeaders";
+import { ROUTES } from "@/src/lib/routes";
 
 export function getCurrentSeason(): string {
   const now = new Date();
@@ -20,7 +23,16 @@ export function LeagueOverview() {
 
       <Wrapper className="relative grid grid-cols-1 gap-12 lg:grid-cols-5 lg:gap-10">
         <div className="lg:col-span-3">
-          <SectionHeading label="ეროვნული ლიგა" title="სატურნირო ცხრილი" />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <SectionHeading label="ეროვნული ლიგა" title="სატურნირო ცხრილი" />
+            <Link
+              href={ROUTES.table}
+              className="group inline-flex w-fit items-center gap-2 rounded-full border border-[#a5b4fc]/20 px-4 py-2 text-sm font-medium text-[#a5b4fc] transition-all duration-300 hover:border-[#a5b4fc]/40 hover:bg-[#a5b4fc]/5 mb-5"
+            >
+              სრული ცხრილი
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </Link>
+          </div>
           <StandingsTable />
         </div>
 

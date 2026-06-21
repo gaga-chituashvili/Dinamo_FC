@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SocialIcon } from "./SocialIcon";
 import { SOCIAL_LINKS, DINAMO_LOGO_URL } from "./footer.constants";
+import { ROUTES } from "@/src/lib/routes";
 
 export function FooterBrand() {
   return (
@@ -14,7 +15,10 @@ export function FooterBrand() {
             className="h-full w-full object-contain brightness-0 invert"
           />
         </div>
-        <Link href="/" className="text-xl font-black italic text-[#a5b4fc]">
+        <Link
+          href={ROUTES.home}
+          className="text-xl font-black italic text-[#a5b4fc]"
+        >
           DINAMO_FC
         </Link>
       </div>

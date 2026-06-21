@@ -12,6 +12,7 @@ import {
   isDinamo,
 } from "../next-match/next-match.utils";
 import { useCountdown } from "../next-match/useCountdown";
+import { ROUTES } from "@/src/lib/routes";
 
 export function NextMatch() {
   const [nextMatch, setNextMatch] = useState<Fixture | null>(null);
@@ -170,7 +171,7 @@ export function NextMatch() {
               <>
                 <div className="hidden h-16 w-px bg-white/10 lg:block" />
                 <Link
-                  href="/live"
+                  href={ROUTES.live}
                   className="flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 px-6 py-4 text-xs font-bold tracking-widest text-[#8b8d9e] transition-all hover:border-red-500 hover:text-red-400 cursor-pointer"
                 >
                   <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" />

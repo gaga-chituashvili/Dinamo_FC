@@ -20,6 +20,7 @@ import { loginSchema, type LoginFormValues } from "../schema/login.schema";
 import { authApi } from "../../api/auth";
 import { resolveRegistrationContext } from "../../config/registration-context";
 import { resolveAuthRoutes } from "../../routes";
+import { ROUTES } from "@/src/lib/routes";
 
 export function LoginForm() {
   const router = useRouter();
@@ -87,7 +88,7 @@ export function LoginForm() {
                   პაროლი
                 </FormLabel>
                 <Link
-                  href="/forgot-password"
+                  href={ROUTES.forgotPassword}
                   className="text-xs font-semibold text-[#a5b4fc] transition-colors hover:text-white"
                 >
                   დაგავიწყდათ პაროლი?
@@ -99,7 +100,7 @@ export function LoginForm() {
                     {...field}
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="h-12 rounded-lg border border-white/[0.06] bg-[#161b3a] text-white placeholder:text-[#6b6f8c] focus-visible:ring-[#a5b4fc] focus-visible:border-[#a5b4fc] pr-10"
+                    className="h-12 rounded-lg border border-white/6 bg-[#161b3a] text-white placeholder:text-[#6b6f8c] focus-visible:ring-[#a5b4fc] focus-visible:border-[#a5b4fc] pr-10"
                   />
                   <button
                     type="button"

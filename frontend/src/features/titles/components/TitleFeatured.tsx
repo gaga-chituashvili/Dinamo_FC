@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { TitleCard } from "../types/titles.types";
 import { parseTitleLabel } from "../utils/titles.utils";
+import { ROUTES } from "@/src/lib/routes";
 
 interface Props {
   title: TitleCard;
@@ -54,7 +55,7 @@ export function TitleFeatured({ title }: Props) {
           </ul>
 
           <a
-            href="/history"
+            href={ROUTES.history}
             className="mt-6 inline-flex cursor-pointer items-center gap-2 rounded-lg bg-[#a5b4fc] px-5 py-2.5 text-xs font-bold tracking-widest text-[#0a0e1f] uppercase transition-opacity hover:opacity-90"
           >
             ისტორიის ნახვა
