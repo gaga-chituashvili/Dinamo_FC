@@ -53,7 +53,18 @@ export class HistoryService {
   } | null> {
     try {
       const raw = await fs.readFile(this.CACHE_FILE, 'utf-8');
-      return JSON.parse(raw);
+      const parsed: unknown = JSON.parse(raw);
+
+      if (
+        parsed &&
+        typeof parsed === 'object' &&
+        'data' in parsed &&
+        'cachedAt' in parsed
+      ) {
+        return parsed as { data: HistoryEra[]; cachedAt: number };
+      }
+
+      return null;
     } catch {
       return null;
     }

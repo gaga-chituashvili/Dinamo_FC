@@ -9,19 +9,25 @@ const HEADERS = {
   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 };
 
+export interface NewsItem {
+  title: string;
+  url: string;
+  image: string | null;
+}
+
 @Injectable()
 export class NewsService {
   private readonly logger = new Logger(NewsService.name);
-  private cache: { data: any; cachedAt: number } | null = null;
+  private cache: { data: NewsItem[]; cachedAt: number } | null = null;
   private readonly CACHE_TTL = 30 * 60 * 1000;
 
-  async getNews() {
+  async getNews(): Promise<NewsItem[]> {
     if (this.cache && Date.now() - this.cache.cachedAt < this.CACHE_TTL) {
       return this.cache.data;
     }
 
     this.logger.log('Scraping news from erovnuliliga.ge');
-    const news: { title: string; url: string; image: string | null }[] = [];
+    const news: NewsItem[] = [];
     const baseUrl = (
       process.env.BASE_URL ?? 'https://dinamotb.fly.dev'
     ).replace(/\/$/, '');
@@ -31,7 +37,7 @@ export class NewsService {
         page === 0
           ? 'https://erovnuliliga.ge/ge/news'
           : `https://erovnuliliga.ge/ge/news?page=${page}`;
-      const { data: html } = await axios.get(url, { headers: HEADERS });
+      const { data: html } = await axios.get<string>(url, { headers: HEADERS });
       const $ = cheerio.load(html);
 
       $('a.e-article-teaser').each((_, el) => {

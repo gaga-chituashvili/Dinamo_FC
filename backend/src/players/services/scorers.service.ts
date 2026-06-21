@@ -9,25 +9,41 @@ const HEADERS = {
   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 };
 
+export interface ScorerEntry {
+  rank: number;
+  name: string;
+  team: string;
+  value: number;
+  photo: string | null;
+  clubLogo: string | null;
+}
+
+export interface TopScorers {
+  goals: ScorerEntry[];
+  assists: ScorerEntry[];
+  appearances: ScorerEntry[];
+}
+
 @Injectable()
 export class ScorersService {
   private readonly logger = new Logger(ScorersService.name);
-  private cache: { data: any; cachedAt: number } | null = null;
+  private cache: { data: TopScorers; cachedAt: number } | null = null;
   private readonly CACHE_TTL = 5 * 60 * 1000;
 
-  async getTopScorers() {
+  async getTopScorers(): Promise<TopScorers> {
     if (this.cache && Date.now() - this.cache.cachedAt < this.CACHE_TTL) {
       return this.cache.data;
     }
 
     this.logger.log('Scraping top scorers from erovnuliliga.ge');
-    const { data: html } = await axios.get('https://erovnuliliga.ge/ge/stats', {
-      headers: HEADERS,
-    });
+    const { data: html } = await axios.get<string>(
+      'https://erovnuliliga.ge/ge/stats',
+      { headers: HEADERS },
+    );
     const $ = cheerio.load(html);
 
-    const parseList = (wrapper: cheerio.Cheerio<any>) => {
-      const result: any[] = [];
+    const parseList = (wrapper: cheerio.Cheerio<any>): ScorerEntry[] => {
+      const result: ScorerEntry[] = [];
       wrapper.find('li').each((_, el) => {
         const rank = parseInt(
           $(el).find('.ptl-rank').text().replace('.', '').trim(),
@@ -68,7 +84,7 @@ export class ScorersService {
     };
 
     const wrappers = $('.player-tops-list');
-    const result = {
+    const result: TopScorers = {
       goals: parseList($(wrappers[0])).slice(0, 5),
       assists: parseList($(wrappers[1])).slice(0, 5),
       appearances: parseList($(wrappers[2])).slice(0, 5),
