@@ -9,6 +9,7 @@ import { SideCard } from "../news/SideCard";
 import { NewsBackground } from "../news/NewsBackground";
 import { NEWS_TAGS } from "../news/news.constants";
 import type { NewsArticle } from "@/src/features/home/types/topPlayer.type";
+import { ROUTES } from "@/src/lib/routes";
 
 export function NewsSection() {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
@@ -78,7 +79,7 @@ export function NewsSection() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/news"
+              href={ROUTES.news}
               className="hidden items-center gap-2 whitespace-nowrap text-xs font-bold tracking-widest text-[#8b8d9e] transition-colors hover:text-white sm:flex"
             >
               ყველა სიახლე <ArrowRight size={14} />
