@@ -21,6 +21,7 @@ import { registerSchema } from "../schema/register.schema";
 import { authApi } from "../../api/auth";
 import { resolveRegistrationContext } from "../../config/registration-context";
 import { resolveAuthRoutes } from "../../routes";
+import { ROUTES } from "@/src/lib/routes";
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
@@ -202,7 +203,7 @@ export function RegisterForm() {
                 <FormLabel className="m-0 cursor-pointer text-sm text-[#8b8d9e]">
                   ვეთანხმები{" "}
                   <Link
-                    href="/terms"
+                    href={ROUTES.terms}
                     className="font-bold text-[#a5b4fc] hover:text-white transition-colors"
                   >
                     წესებსა და პირობებს

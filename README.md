@@ -171,6 +171,7 @@ src/
 │       └── utils/titles.utils.ts
 │
 └── lib/                               # Utility functions and shared logic
+    |── routes.ts                      # Route path constants
     ├── api.ts                         # Base API client
     ├── identity-auth.ts               # Identity/session authentication helpers
     ├── jwt-payload.ts                 # JWT token decoder

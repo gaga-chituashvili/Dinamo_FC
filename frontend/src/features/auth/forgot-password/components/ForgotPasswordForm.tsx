@@ -9,6 +9,7 @@ import {
   forgotPasswordSchema,
   type ForgotPasswordSchema,
 } from "../schema/forgot-password.schema";
+import { ROUTES } from "@/src/lib/routes";
 
 export function ForgotPasswordForm() {
   const [status, setStatus] = useState<
@@ -44,7 +45,7 @@ export function ForgotPasswordForm() {
           შეამოწმეთ თქვენი ელ-ფოსტა და გაიარეთ პაროლის აღდგენის პროცედურა.
         </p>
         <Link
-          href="/login"
+          href={ROUTES.login}
           className="mt-2 text-sm font-semibold text-[#2dac5c] hover:opacity-80 transition-opacity"
         >
           შესვლის გვერდზე დაბრუნება
@@ -94,7 +95,7 @@ export function ForgotPasswordForm() {
       <div className="border-t border-white/10" />
 
       <Link
-        href="/login"
+        href={ROUTES.login}
         className="flex items-center justify-center gap-2 text-sm font-semibold text-gray-400 hover:text-white transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />

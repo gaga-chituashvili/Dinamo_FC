@@ -5,11 +5,24 @@ import axios from 'axios';
 import { Resend } from 'resend';
 import { User } from '../../auth/entities/user.entity';
 
-interface LiveVideo {
+export interface LiveVideo {
   videoId: string;
   title: string;
   channel: string;
   thumbnail: string | null;
+}
+
+interface YouTubeSearchItem {
+  id: { videoId: string };
+  snippet: {
+    title: string;
+    channelTitle: string;
+    thumbnails?: { high?: { url: string } };
+  };
+}
+
+interface YouTubeSearchResponse {
+  items?: YouTubeSearchItem[];
 }
 
 @Injectable()
@@ -19,25 +32,32 @@ export class LiveService {
   private liveNotifiedAt: number | null = null;
   private cache: { data: { live: LiveVideo[] }; cachedAt: number } | null =
     null;
-  private readonly CACHE_TTL = 15 * 60 * 1000;
+  private readonly CACHE_TTL_LIVE = 5 * 60 * 1000;
+  private readonly CACHE_TTL_IDLE = 60 * 1000;
 
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
   ) {}
 
-  async getLive() {
-    if (this.cache && Date.now() - this.cache.cachedAt < this.CACHE_TTL) {
-      return this.cache.data;
+  async getLive(): Promise<{ live: LiveVideo[] }> {
+    if (this.cache) {
+      const age = Date.now() - this.cache.cachedAt;
+      const hasLive = this.cache.data.live.length > 0;
+      const ttl = hasLive ? this.CACHE_TTL_LIVE : this.CACHE_TTL_IDLE;
+
+      if (age < ttl) {
+        return this.cache.data;
+      }
     }
 
     try {
       const apiKey = process.env.YOUTUBE_API_KEY;
       const query = encodeURIComponent('დინამო თბილისი OR Dinamo tbilisi');
       const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&eventType=live&key=${apiKey}&maxResults=5`;
-      const { data } = await axios.get(url);
+      const { data } = await axios.get<YouTubeSearchResponse>(url);
 
-      const videos = (data.items ?? []).map((item: any) => ({
+      const videos: LiveVideo[] = (data.items ?? []).map((item) => ({
         videoId: item.id.videoId,
         title: item.snippet.title,
         channel: item.snippet.channelTitle,
@@ -59,7 +79,7 @@ export class LiveService {
   async checkAndNotifyLive(): Promise<void> {
     try {
       const result = await this.getLive();
-      const isLive = (result.live as any[]).some((v) => v.videoId);
+      const isLive = result.live.some((v) => v.videoId);
       if (!isLive) {
         this.liveNotifiedAt = null;
         return;

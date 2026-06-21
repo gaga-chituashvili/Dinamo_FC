@@ -11,7 +11,7 @@ const HEADERS = {
   Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 };
 
-interface PlayerStats {
+export interface PlayerStats {
   dateOfBirth: string;
   age: string;
   height: string;
@@ -30,7 +30,9 @@ export class SquadService {
 
   async getSquad(): Promise<PlayerSummary[]> {
     this.logger.log(`Scraping squad from ${SQUAD_URL}`);
-    const { data: html } = await axios.get(SQUAD_URL, { headers: HEADERS });
+    const { data: html } = await axios.get<string>(SQUAD_URL, {
+      headers: HEADERS,
+    });
     const $ = cheerio.load(html);
     const players: PlayerSummary[] = [];
     const FALLBACK_SVG =
@@ -125,7 +127,10 @@ export class SquadService {
 
   private async scrapeStats(profileUrl: string): Promise<PlayerStats> {
     this.logger.log(`Scraping stats from ${profileUrl}`);
-    const { data: html } = await axios.get(profileUrl, { headers: HEADERS });
+
+    const { data: html } = await axios.get<string>(profileUrl, {
+      headers: HEADERS,
+    });
     const $ = cheerio.load(html);
 
     const getInfoValue = (label: string): string => {
