@@ -87,7 +87,7 @@ src/
 │       ├── form.tsx
 │       ├── input.tsx
 │       ├── label.tsx
-│       └── select.tsx                # shadcn Select — H2H dropdown-ისთვის ✨
+│       └── select.tsx               
 │
 ├── features/                         # Feature-based modules
 │   ├── admin/
