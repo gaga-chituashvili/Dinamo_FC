@@ -25,7 +25,7 @@ export interface H2HData {
   winPercent: number;
 }
 
-const DINAMO = 'დინამო თბილისი';
+const DINAMO = 'დინამო თბ';
 
 @Injectable()
 export class H2HScraper {

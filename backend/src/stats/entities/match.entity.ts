@@ -7,7 +7,7 @@ export class Match {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   date: string;
 
   @Column()
