@@ -1,19 +1,19 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   SeasonProgress as SeasonProgressType,
   OnThisDayMatch,
 } from "../../types/stats.types";
+import {
+  getSeasonProgress,
+  getOpponents,
+  getOnThisDay,
+} from "../../services/stats.service";
 import { OnThisDay } from "../OnThisDay";
 import { HeadToHead } from "../HeadToHead";
 import { SeasonProgress } from "../SeasonProgress";
 import { Wrapper } from "@/src/components/shared/wrapper";
-
-interface Props {
-  seasonProgress: SeasonProgressType;
-  opponents: string[];
-  onThisDay: OnThisDayMatch[];
-}
 
 function SectionHeader({ title }: { title: string }) {
   return (
@@ -26,7 +26,36 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-export function StatsView({ seasonProgress, opponents, onThisDay }: Props) {
+export function StatsView() {
+  const [seasonProgress, setSeasonProgress] =
+    useState<SeasonProgressType | null>(null);
+  const [opponents, setOpponents] = useState<string[]>([]);
+  const [onThisDay, setOnThisDay] = useState<OnThisDayMatch[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([getSeasonProgress(), getOpponents(), getOnThisDay()])
+      .then(([sp, op, otd]) => {
+        setSeasonProgress(sp);
+        setOpponents(op);
+        setOnThisDay(otd);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <Wrapper className="py-10 space-y-6">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="h-48 animate-pulse rounded-xl border border-white/6 bg-[#10142a]"
+          />
+        ))}
+      </Wrapper>
+    );
+  }
+
   return (
     <Wrapper className="py-10 space-y-14">
       <div>
@@ -45,10 +74,12 @@ export function StatsView({ seasonProgress, opponents, onThisDay }: Props) {
         <SectionHeader title="თავი თავში" />
         <HeadToHead opponents={opponents} />
       </section>
-      <section>
-        <SectionHeader title="სეზონის პროგრესი" />
-        <SeasonProgress data={seasonProgress} />
-      </section>
+      {seasonProgress && (
+        <section>
+          <SectionHeader title="სეზონის პროგრესი" />
+          <SeasonProgress data={seasonProgress} />
+        </section>
+      )}
     </Wrapper>
   );
 }
