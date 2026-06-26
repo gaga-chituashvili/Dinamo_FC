@@ -1,4 +1,4 @@
-⚽ Dinamo tbilisi FC — Fan Platform
+⚽ Dinamo tbilisi FC — Platform
 
 Official fan platform for Dinamo tbilisi FC. Real-time statistics, news, and league standings scraped dynamically from erovnuliliga.ge.
 
@@ -54,6 +54,9 @@ src/
 │   ├── player/[id]/page.tsx          # Player detail page (dynamic route)
 │   ├── profile/page.tsx              # User profile page
 │   ├── register/page.tsx             # Registration page
+│   ├── robots.ts                     # robots.txt generator
+│   ├── sitemap.ts                    # sitemap.xml generator
+│   ├── stats/page.tsx                # Statistics page
 │   ├── table/page.tsx                # League standings page
 │   ├── team/page.tsx                 # Squad page
 │   └── titles/page.tsx               # Club titles/trophies page
@@ -83,7 +86,8 @@ src/
 │       ├── dropdown-menu.tsx
 │       ├── form.tsx
 │       ├── input.tsx
-│       └── label.tsx
+│       ├── label.tsx
+│       └── select.tsx                # shadcn Select — H2H dropdown-ისთვის ✨
 │
 ├── features/                         # Feature-based modules
 │   ├── admin/
@@ -159,6 +163,22 @@ src/
 │   │   ├── services/squad.service.ts
 │   │   └── types/squad.types.ts
 │   │
+│   ├── stats/                        # Statistics feature module
+│   │   ├── components/
+│   │   │   ├── HeadToHead.tsx        # H2H comparator — shadcn Select + count-up animation
+│   │   │   ├── OnThisDay.tsx         # დღის ისტორიული მატჩები DB-დან
+│   │   │   ├── SeasonProgress.tsx    # სეზონის progress bars — scroll-triggered animation
+│   │   │   └── view/
+│   │   │       └── StatsView.tsx     # server props → client layout, Wrapper
+│   │   ├── hooks/
+│   │   │   ├── useCountUp.ts         # animated number count-up (requestAnimationFrame)
+│   │   │   ├── useH2H.ts             # H2H fetch hook
+│   │   │   └── useInView.ts          # IntersectionObserver — scroll-triggered animations
+│   │   ├── services/
+│   │   │   └── stats.service.ts      # getSeasonProgress, getOpponents, getH2H, getOnThisDay
+│   │   └── types/
+│   │       └── stats.types.ts        # SeasonProgress, H2HData, H2HResult, OnThisDayMatch
+│   │
 │   ├── table/
 │   │   ├── components/               # StandingsTable, TopScorers, TopScorersSection, view
 │   │   └── types/standings.types.ts
@@ -171,7 +191,7 @@ src/
 │       └── utils/titles.utils.ts
 │
 └── lib/                               # Utility functions and shared logic
-    |── routes.ts                      # Route path constants
+    ├── routes.ts                      # Route path constants
     ├── api.ts                         # Base API client
     ├── identity-auth.ts               # Identity/session authentication helpers
     ├── jwt-payload.ts                 # JWT token decoder
@@ -196,17 +216,23 @@ pnpm run start:dev
 
 ### API Endpoints
 
-| Method | Endpoint                 | Description                       |
-| ------ | ------------------------ | --------------------------------- |
-| GET    | `/api/players`           | Squad list                        |
-| GET    | `/api/players/fixtures`  | Upcoming fixtures                 |
-| GET    | `/api/players/standings` | League standings                  |
-| GET    | `/api/players/scorers`   | Top scorers, assists, appearances |
-| GET    | `/api/players/news`      | Latest news                       |
-| GET    | `/api/players/history`   | Club history                      |
-| GET    | `/api/players/titles`    | Club titles                       |   
-| GET    | `/api/players/:id`       | Single player detail              |
-| POST   | `/api/contact`           | Contact form submission           |
+| Method | Endpoint                       | Description                        |
+| ------ | ------------------------------ | ---------------------------------- |
+| GET    | `/api/players`                 | Squad list                         |
+| GET    | `/api/players/:id`             | Single player detail               |
+| GET    | `/api/news`                    | Latest Dinamo news                 |
+| GET    | `/api/standings`               | League standings                   |
+| GET    | `/api/standings/scorers`       | Top scorers, assists, appearances  |
+| GET    | `/api/fixtures`                | Upcoming fixtures                  |
+| GET    | `/api/live`                    | Live YouTube stream detection      |
+| GET    | `/api/history`                 | Club history (Playwright scraper)  |
+| GET    | `/api/titles`                  | Club titles (Playwright scraper)   |
+| GET    | `/api/stats/season-progress`   | Realtime season standings          |
+| GET    | `/api/stats/h2h/opponents`     | Dynamic opponent list from DB      |
+| GET    | `/api/stats/h2h?opponent=X`    | H2H record vs opponent             |
+| GET    | `/api/stats/on-this-day`       | Historical matches on today's date |
+| POST   | `/api/contact`                 | Contact form submission            |
+
 
 ### Caching
 
