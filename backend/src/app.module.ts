@@ -12,7 +12,15 @@ import { User } from './auth/entities/user.entity';
 import { PasswordReset } from './auth/entities/password-reset.entity';
 import { ProfileModule } from './profile/profile.module';
 import { FanProfile } from './profile/entities/fan-profile.entity';
+import { Match } from './stats/entities/match.entity';
 import { SponsorsModule } from './sponsors/sponsors.module';
+import { NewsModule } from './news/news.module';
+import { StandingsModule } from './standings/standings.module';
+import { LiveModule } from './live/live.module';
+import { FixturesModule } from './fixtures/fixtures.module';
+import { HistoryModule } from './history/history.module';
+import { TitlesModule } from './titles/titles.module';
+import { StatsModule } from './stats/stats.module';
 
 @Module({
   imports: [
@@ -27,6 +35,7 @@ import { SponsorsModule } from './sponsors/sponsors.module';
         User,
         PasswordReset,
         FanProfile,
+        Match,
       ],
       synchronize: true,
       ssl: { rejectUnauthorized: false },
@@ -37,6 +46,13 @@ import { SponsorsModule } from './sponsors/sponsors.module';
     AuthModule,
     ProfileModule,
     SponsorsModule,
+    NewsModule,
+    StandingsModule,
+    LiveModule,
+    FixturesModule,
+    HistoryModule,
+    TitlesModule,
+    StatsModule,
   ],
 })
 export class AppModule {}

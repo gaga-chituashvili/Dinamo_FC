@@ -7,7 +7,7 @@ export async function fetchFixtures(): Promise<Fixture[]> {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/players/fixtures`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/fixtures`,
   );
   if (!res.ok) throw new Error(`Failed to fetch fixtures: ${res.status}`);
 

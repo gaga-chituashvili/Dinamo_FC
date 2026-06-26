@@ -36,3 +36,4 @@ frontend/out/
 frontend/next-env.d.ts
 frontend/.vercel/
 
+backend/cache/

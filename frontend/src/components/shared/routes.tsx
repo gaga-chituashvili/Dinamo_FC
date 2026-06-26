@@ -10,4 +10,5 @@ export const NAV_ROUTES = {
   contact: "/contact",
   history: "/history",
   titles: "/titles",
+  stats: "/stats",
 } as const;
