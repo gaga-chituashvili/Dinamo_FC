@@ -19,4 +19,9 @@ export class StatsController {
   getH2H(@Query('opponent') opponent: string) {
     return this.statsService.getH2H(opponent);
   }
+
+  @Get('on-this-day')
+  getOnThisDay() {
+    return this.statsService.getOnThisDay();
+  }
 }
