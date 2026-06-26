@@ -11,7 +11,7 @@ export function StandingsTable() {
     async function load() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/players/standings`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/standings`,
         );
         const json = await res.json();
         const data: Standing[] = Array.isArray(json) ? json : [];

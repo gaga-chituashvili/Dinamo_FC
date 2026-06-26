@@ -7,7 +7,7 @@ export async function fetchStandings(): Promise<Standing[]> {
   }
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/players/standings`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/standings`,
   );
   if (!res.ok) throw new Error(`Failed to fetch standings: ${res.status}`);
 

@@ -22,7 +22,7 @@ export function TopScorers() {
     async function load() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/players/scorers`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/standings/scorers`,
         );
         const json: unknown = await res.json();
         const data = json as {
