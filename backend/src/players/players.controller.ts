@@ -10,56 +10,16 @@ import {
 import type { Response } from 'express';
 import type { Readable } from 'stream';
 import { PlayersService } from './players.service';
-import { TitlesService } from './services/titles.service';
 import axios from 'axios';
 
 @Controller('players')
 export class PlayersController {
-  constructor(
-    private readonly playersService: PlayersService,
-    private readonly titlesService: TitlesService,
-  ) {}
+  constructor(private readonly playersService: PlayersService) {}
 
   @Get()
   @HttpCode(HttpStatus.OK)
   getSquad() {
     return this.playersService.getSquad();
-  }
-
-  @Get('fixtures')
-  @HttpCode(HttpStatus.OK)
-  getFixtures() {
-    return this.playersService.getFixtures();
-  }
-
-  @Get('standings')
-  @HttpCode(HttpStatus.OK)
-  getStandings() {
-    return this.playersService.getStandings();
-  }
-
-  @Get('scorers')
-  @HttpCode(HttpStatus.OK)
-  getTopScorers() {
-    return this.playersService.getTopScorers();
-  }
-
-  @Get('news')
-  @HttpCode(HttpStatus.OK)
-  getNews() {
-    return this.playersService.getNews();
-  }
-
-  @Get('history')
-  @HttpCode(HttpStatus.OK)
-  getHistory() {
-    return this.playersService.getHistory();
-  }
-
-  @Get('live')
-  @HttpCode(HttpStatus.OK)
-  getLive() {
-    return this.playersService.getLive();
   }
 
   @Get('proxy-image')
@@ -69,8 +29,7 @@ export class PlayersController {
         responseType: 'stream',
         headers: {
           Referer: 'https://erovnuliliga.ge',
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
         },
       });
       res.setHeader('Content-Type', 'image/jpeg');
@@ -79,11 +38,6 @@ export class PlayersController {
     } catch {
       res.status(404).end();
     }
-  }
-  @Get('titles')
-  @HttpCode(HttpStatus.OK)
-  getTitles() {
-    return this.titlesService.getTitles();
   }
 
   @Get(':id')
