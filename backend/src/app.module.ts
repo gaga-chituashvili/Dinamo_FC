@@ -19,6 +19,7 @@ import { LiveModule } from './live/live.module';
 import { FixturesModule } from './fixtures/fixtures.module';
 import { HistoryModule } from './history/history.module';
 import { TitlesModule } from './titles/titles.module';
+import { StatsModule } from './stats/stats.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { TitlesModule } from './titles/titles.module';
     FixturesModule,
     HistoryModule,
     TitlesModule,
+    StatsModule,
   ],
 })
 export class AppModule {}
