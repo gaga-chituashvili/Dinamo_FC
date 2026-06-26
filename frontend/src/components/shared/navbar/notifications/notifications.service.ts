@@ -9,7 +9,7 @@ const PREVIEW_COUNT = 3;
 
 export async function fetchLatestNews(): Promise<NewsItem[]> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/players/news`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/news`,
   );
   if (!res.ok) throw new Error(`Failed to fetch news: ${res.status}`);
   const data: NewsItem[] = await res.json();
@@ -18,7 +18,7 @@ export async function fetchLatestNews(): Promise<NewsItem[]> {
 
 export async function fetchNewsCount(): Promise<number> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/players/news`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/news`,
   );
   if (!res.ok) return 0;
   const data: NewsItem[] = await res.json();

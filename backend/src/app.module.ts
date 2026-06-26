@@ -13,6 +13,12 @@ import { PasswordReset } from './auth/entities/password-reset.entity';
 import { ProfileModule } from './profile/profile.module';
 import { FanProfile } from './profile/entities/fan-profile.entity';
 import { SponsorsModule } from './sponsors/sponsors.module';
+import { NewsModule } from './news/news.module';
+import { StandingsModule } from './standings/standings.module';
+import { LiveModule } from './live/live.module';
+import { FixturesModule } from './fixtures/fixtures.module';
+import { HistoryModule } from './history/history.module';
+import { TitlesModule } from './titles/titles.module';
 
 @Module({
   imports: [
@@ -37,6 +43,12 @@ import { SponsorsModule } from './sponsors/sponsors.module';
     AuthModule,
     ProfileModule,
     SponsorsModule,
+    NewsModule,
+    StandingsModule,
+    LiveModule,
+    FixturesModule,
+    HistoryModule,
+    TitlesModule,
   ],
 })
 export class AppModule {}

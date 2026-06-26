@@ -20,7 +20,7 @@ export function NewsSection() {
     async function load() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/players/news`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/news`,
         );
         const data = await res.json();
         const mapped: NewsArticle[] = (Array.isArray(data) ? data : []).map(

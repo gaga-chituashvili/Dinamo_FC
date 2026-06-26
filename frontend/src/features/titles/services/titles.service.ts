@@ -3,7 +3,7 @@ import { TitleCard } from "../types/titles.types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
 export async function fetchTitles(): Promise<TitleCard[]> {
-  const res = await fetch(`${API_URL}/api/players/titles`, {
+  const res = await fetch(`${API_URL}/api/titles`, {
     next: { revalidate: 3600 },
   });
 
