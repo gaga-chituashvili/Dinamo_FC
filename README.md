@@ -248,14 +248,16 @@ fly deploy
 
 ## 🔄 Data Sources
 
-| Data              | Source                                   | Method          |
-| ----------------- | ---------------------------------------- | --------------- |
-| League standings  | erovnuliliga.ge/ge/tables                | axios + cheerio |
-| Upcoming fixtures | erovnuliliga.ge/ge/club/torpedo/calendar | axios + cheerio |
-| Top scorers       | erovnuliliga.ge/ge/stats                 | axios + cheerio |
-| News              | erovnuliliga.ge/ge/news                  | axios + cheerio |
-| Club history      | dinamo.ge/ka/page/history                | axios + cheerio |
-| Titles            | dinamo.ge/club/titles                    | axios + cheerio |
+| Data              | Source                                          | Method                     |
+| ----------------- | ----------------------------------------------- | -------------------------- |
+| League standings  | erovnuliliga.ge/ge/tables                       | axios + cheerio            |
+| Upcoming fixtures | erovnuliliga.ge/ge/club/dinamo-tb/calendar      | axios + cheerio            |
+| Top scorers       | erovnuliliga.ge/ge/stats                        | axios + cheerio            |
+| News              | erovnuliliga.ge/ge/news                         | axios + cheerio            |
+| Club history      | fcdinamo.ge/club/history                        | Playwright                 |
+| Titles            | fcdinamo.ge/club/titles                         | Playwright                 |
+| Match history     | erovnuliliga.ge (season + game pages)           | Playwright + parallel axios|
+| Season progress   | erovnuliliga.ge/ge/tables                       | axios + cheerio            |
 
 ---
 
